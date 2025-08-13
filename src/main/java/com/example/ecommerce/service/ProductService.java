@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.repository.ProductRepository;
+import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
 
 @Service
@@ -58,6 +59,15 @@ public class ProductService {
         }
         productRepository.deleteById(id);
     }
+    
+	// Get by Id
+	public Product get(Long id) {
+		// findById return Optional<category>
+		// safe way to indicate that the return data type can either be Category or null
+		return productRepository.findById(id).orElseThrow(()
+				/// if it is null we throw an error message -> we should return error message in Controller
+				-> new RuntimeException("Product Not Found"));
+	}
 
 	
 }
